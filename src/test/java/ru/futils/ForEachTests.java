@@ -46,7 +46,4 @@ public class ForEachTests {
     public void forEach3() {
         forEachTest(1);
     }
-
-
-
 }

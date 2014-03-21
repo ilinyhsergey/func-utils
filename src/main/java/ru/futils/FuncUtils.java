@@ -35,7 +35,7 @@ public final class FuncUtils {
      * @param f    function to apply
      * @param <T>  type converted values
      * @param <R>  type of result values
-     * @param <Ct> collection of converted elements
+     * @param <Ct> type of collection to map
      * @param <Cr> type of result collection
      * @return instance of cls which contain mapped collection
      */
@@ -58,6 +58,35 @@ public final class FuncUtils {
         return res;
     }
 
+    /**
+     *
+     * @param c collection to filter
+     * @param cls class of implementation of result collection
+     * @param f function predicate
+     * @param <T> type of collection element
+     * @param <Ct> type of collection to filter
+     * @param <Cr> type of filtered collection
+     * @return instance of cls which contain filtered collection
+     */
+    @SuppressWarnings("unchecked")
+    public static <T, Ct extends Collection<T>, Cr extends Collection<T>>
+    Cr filter(Ct c, Class<? extends Collection> cls, F1<T, Boolean> f) {
+        if (c == null)
+            return null;
+
+        Cr res;
+        try {
+            res = (Cr) cls.newInstance();
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+
+        for (T t : c)
+            if (f.apply(t))
+                res.add(t);
+
+        return res;
+    }
 
 
 }

@@ -19,7 +19,7 @@ public class MapTests {
 
     public void mapTest(Integer... args) {
         List<Integer> list = Arrays.asList(args);
-        final ArrayList<Integer> list2 = FuncUtils.map(list, ArrayList.class, new F1<Integer, Integer>() {
+        ArrayList<Integer> list2 = FuncUtils.map(list, ArrayList.class, new F1<Integer, Integer>() {
             @Override
             public Integer apply(Integer a1) {
                 return a1;
