@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenLocal()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+
+def projectName = 'func-utils'
+def projectVersion = '0.1.0'
+def projectFullName = projectName + '-' + projectVersion
+def jarName = projectFullName + '.jar'
+
+jar {
+    baseName = projectName
+    version = projectVersion
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile("junit:junit:4.11")
+    testCompile("log4j:log4j:1.2.14")
+}
+
