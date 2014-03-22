@@ -7,6 +7,7 @@ import java.util.Collection;
 
 /**
  * Utils for using functional programming paradigm in java.
+ * Contain methods such as: forEach, map, filter, some, every, reduce, reduceRight.
  *
  * @author ilinyh.s@gmail.com
  */
@@ -125,7 +126,7 @@ public final class FuncUtils {
     public static <T, Ct extends Collection<T>>
     Boolean every(Ct c, F1<T, Boolean> f) {
         if (c == null)
-            return false;
+            return true;
 
         for (T t : c)
             if (!f.apply(t))
@@ -175,6 +176,50 @@ public final class FuncUtils {
 
     @SuppressWarnings("unchecked")
     public static <T, Ct extends Collection<T>> T reduce(Ct c, F2<T, T, T> f, T i) {
-        return c == null ? null : reduce((T[]) c.toArray(), f, i);
+        return c == null ? i : reduce((T[]) c.toArray(), f, i);
+    }
+
+    /**
+     * Convolution method. Combines elements of the array a from left to right.
+     *
+     * @param a   array to combine
+     * @param f   function of 2 arguments,
+     *            first argument of f takes the value calculated in the previous step,
+     *            second argument of f takes the next value of the array
+     * @param i   initial value to combine
+     * @param <T> type of array elements
+     * @return combined value represented by the formula:
+     * if i is expected value equals <code>f (f (f (f (i,a[N-1]), a[N-2]), a[N-3]), ...)</code>
+     * if i is null value equals  <code>f (f (f (a[N-1], a[N-2]), a[N-3]), ...)</code>
+     */
+    public static <T> T reduceRight(T[] a, F2<T, T, T> f, T i) {
+        if (a == null || a.length == 0)
+            return i;
+
+        int length = a.length;
+
+        T ret = a[length - 1];
+
+        if (i != null)
+            ret = f.apply(i, ret);
+
+        for (int id = length - 2; id >= 0; --id)
+            ret = f.apply(ret, a[id]);
+
+        return ret;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T reduceRight(Collection<T> c, F2<T, T, T> f) {
+        return c == null ? null : reduceRight((T[]) c.toArray(), f);
+    }
+
+    public static <T> T reduceRight(T[] a, F2<T, T, T> f) {
+        return reduceRight(a, f, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T reduceRight(Collection<T> c, F2<T, T, T> f, T i) {
+        return c == null ? i : reduceRight((T[]) c.toArray(), f, i);
     }
 }

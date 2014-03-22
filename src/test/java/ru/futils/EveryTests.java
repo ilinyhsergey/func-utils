@@ -17,80 +17,56 @@ import static org.junit.Assert.assertTrue;
 @RunWith(JUnit4.class)
 public class EveryTests {
 
-    @Test
-    public void test1() {
-        List<Integer> list = Arrays.asList(2, 4, 6, 8, 10);
-        assertTrue(FuncUtils.every(list, new F1<Integer, Boolean>() {
+    private F1<Integer, Boolean> f;
+    private F1<Integer, Boolean> fFalse;
+
+    public EveryTests() {
+        f = new F1<Integer, Boolean>() {
             @Override
             public Boolean apply(Integer a1) {
                 return a1 % 2 == 0;
             }
-        }));
-    }
+        };
 
-    @Test
-    public void test2() {
-        List<Integer> list = Arrays.asList(2, 4, 6, 7, 8, 10);
-        assertFalse(FuncUtils.every(list, new F1<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer a1) {
-                return a1 % 2 == 0;
-            }
-        }));
-    }
-
-    @Test
-    public void test3() {
-        List<Integer> list = Arrays.asList();
-        assertTrue(FuncUtils.every(list, new F1<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer a1) {
-                return a1 % 2 == 0;
-            }
-        }));
-    }
-
-    @Test
-    public void test4() {
-        List<Integer> list = Arrays.asList(100);
-        assertTrue(FuncUtils.every(list, new F1<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer a1) {
-                return a1 % 2 == 0;
-            }
-        }));
-    }
-
-    @Test
-    public void test5() {
-        List<Integer> list = Arrays.asList(101);
-        assertFalse(FuncUtils.every(list, new F1<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer a1) {
-                return a1 % 2 == 0;
-            }
-        }));
-    }
-
-    @Test
-    public void test6() {
-        assertFalse(FuncUtils.every(null, new F1<Integer, Boolean>() {
+        fFalse = new F1<Integer, Boolean>() {
             @Override
             public Boolean apply(Integer a1) {
                 return false;
             }
-        }));
+        };
     }
 
     @Test
-    public void test7() {
-        List<Integer> list = Arrays.asList(null, null, null);
-        assertTrue(FuncUtils.every(list, new F1<Integer, Boolean>() {
-            @Override
-            public Boolean apply(Integer a1) {
-                return a1 == null;
-            }
-        }));
+    public void nonEmptyList() {
+        List<Integer> list = Arrays.asList(2, 4, 6, 8, 10);
+        assertTrue(FuncUtils.every(list, f));
+        assertFalse(FuncUtils.every(list, fFalse));
+
+        list = Arrays.asList(2, 4, 6, 7, 8, 10);
+        assertFalse(FuncUtils.every(list, f));
+        assertFalse(FuncUtils.every(list, fFalse));
+    }
+
+    @Test
+    public void emptyList() {
+        List<Integer> list = Arrays.asList();
+        assertTrue(FuncUtils.every(list, f));
+        assertTrue(FuncUtils.every(list, fFalse));
+    }
+
+    @Test
+    public void singleInList() {
+        List<Integer> list = Arrays.asList(100);
+        assertTrue(FuncUtils.every(list, f));
+
+        list = Arrays.asList(101);
+        assertFalse(FuncUtils.every(list, f));
+    }
+
+    @Test
+    public void nullArg() {
+        assertTrue(FuncUtils.every(null, f));
+        assertTrue(FuncUtils.every(null, fFalse));
     }
 
 }

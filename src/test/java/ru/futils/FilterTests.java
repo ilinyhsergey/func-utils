@@ -31,27 +31,23 @@ public class FilterTests {
     }
 
     @Test
-    public void test1() {
+    public void nonEmptyList() {
         test(new Integer[]{1, 4, 5, 3, 2}, new Integer[]{4, 2});
     }
 
     @Test
-    public void test2() {
+    public void emptyList() {
         test(new Integer[0], new Integer[0]);
     }
 
     @Test
-    public void test3() {
+    public void singleInList() {
         test(new Integer[]{1}, new Integer[0]);
-    }
-
-    @Test
-    public void test4() {
         test(new Integer[]{20}, new Integer[]{20});
     }
 
     @Test
-    public void test5() {
+    public void nullArg() {
         Collection<Object> filter = FuncUtils.filter(null, ArrayList.class, new F1<Object, Boolean>() {
             @Override
             public Boolean apply(Object a1) {
