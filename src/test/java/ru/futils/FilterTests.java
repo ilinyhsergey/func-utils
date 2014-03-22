@@ -7,8 +7,10 @@ import ru.futils.func.F1;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author ilinyh.s@gmail.com
@@ -46,6 +48,17 @@ public class FilterTests {
     @Test
     public void filterTest4() {
         filterTest(new Integer[]{20}, new Integer[]{20});
+    }
+
+    @Test
+    public void filterTest5() {
+        Collection<Object> filter = FuncUtils.filter(null, ArrayList.class, new F1<Object, Boolean>() {
+            @Override
+            public Boolean apply(Object a1) {
+                return true;
+            }
+        });
+        assertNull(filter);
     }
 
 }

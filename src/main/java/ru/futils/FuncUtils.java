@@ -30,6 +30,8 @@ public final class FuncUtils {
     }
 
     /**
+     * Map collection c to other collection using conversion function f
+     *
      * @param c    collection to map
      * @param cls  class of implementation of result collection
      * @param f    function to apply
@@ -59,11 +61,12 @@ public final class FuncUtils {
     }
 
     /**
+     * Filter collection c using predicate function f
      *
-     * @param c collection to filter
-     * @param cls class of implementation of result collection
-     * @param f function predicate
-     * @param <T> type of collection element
+     * @param c    collection to filter
+     * @param cls  class of implementation of result collection
+     * @param f    function predicate
+     * @param <T>  type of collection element
      * @param <Ct> type of collection to filter
      * @param <Cr> type of filtered collection
      * @return instance of cls which contain filtered collection
@@ -87,6 +90,28 @@ public final class FuncUtils {
 
         return res;
     }
+
+    /**
+     * Check if collection c contain at least one element satisfies the predicate f
+     *
+     * @param c    collection to check
+     * @param f    predicate
+     * @param <T>  type of collection element
+     * @param <Ct> type of collection
+     * @return return true if at least one element of the collection satisfies the predicate f, otherwise return false
+     */
+    public static <T, Ct extends Collection<T>>
+    Boolean some(Ct c, F1<T, Boolean> f) {
+        if (c == null)
+            return false;
+
+        for (T t : c)
+            if (f.apply(t))
+                return true;
+
+        return false;
+    }
+
 
 
 }
