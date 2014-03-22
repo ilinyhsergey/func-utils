@@ -19,7 +19,7 @@ import static org.junit.Assert.assertTrue;
 public class SomeTests {
 
     @Test
-    public void filterTest1() {
+    public void test1() {
         List<String> list = Arrays.asList("one", "two", "three");
         assertTrue(FuncUtils.some(list, new F1<String, Boolean>() {
             @Override
@@ -30,7 +30,7 @@ public class SomeTests {
     }
 
     @Test
-    public void filterTest2() {
+    public void test2() {
         List<String> list = Arrays.asList("one", "two", "three");
         assertFalse(FuncUtils.some(list, new F1<String, Boolean>() {
             @Override
@@ -41,7 +41,7 @@ public class SomeTests {
     }
 
     @Test
-    public void filterTest3() {
+    public void test3() {
         List<String> list = new ArrayList<String>(0);
         assertFalse(FuncUtils.some(list, new F1<String, Boolean>() {
             @Override
@@ -52,7 +52,7 @@ public class SomeTests {
     }
 
     @Test
-    public void filterTest4() {
+    public void test4() {
         List<String> list = new ArrayList<String>(1){{
             add(null);
         }};
@@ -65,7 +65,7 @@ public class SomeTests {
     }
 
     @Test
-    public void filterTest5() {
+    public void test5() {
         List<String> list = new ArrayList<String>(1){{
             add(null);
         }};
@@ -78,7 +78,7 @@ public class SomeTests {
     }
 
     @Test
-    public void filterTest6() {
+    public void test6() {
         assertFalse(FuncUtils.some(null, new F1<String, Boolean>() {
             @Override
             public Boolean apply(String a1) {

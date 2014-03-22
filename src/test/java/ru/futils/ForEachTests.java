@@ -17,7 +17,7 @@ import static org.junit.Assert.assertArrayEquals;
 @RunWith(JUnit4.class)
 public class ForEachTests {
 
-    public void forEachTest(Integer... args) {
+    public void test(Integer... args) {
         List<Integer> list = Arrays.asList(args);
         final ArrayList<Integer> list2 = new ArrayList<Integer>(list.size());
 
@@ -33,17 +33,17 @@ public class ForEachTests {
     }
 
     @Test
-    public void forEach1() {
-        forEachTest(1, 5, 3, 2, 4);
+    public void test1() {
+        test(1, 5, 3, 2, 4);
     }
 
     @Test
-    public void forEach2() {
-        forEachTest();
+    public void test2() {
+        test();
     }
 
     @Test
-    public void forEach3() {
-        forEachTest(1);
+    public void test3() {
+        test(1);
     }
 }

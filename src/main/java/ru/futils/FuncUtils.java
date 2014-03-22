@@ -112,6 +112,26 @@ public final class FuncUtils {
         return false;
     }
 
+    /**
+     * Check if collection c contain all element satisfies the predicate f
+     *
+     * @param c    collection to check
+     * @param f    predicate
+     * @param <T>  type of collection element
+     * @param <Ct> type of collection
+     * @return return true if all elements of the collection satisfies the predicate f, otherwise return false
+     */
+    public static <T, Ct extends Collection<T>>
+    Boolean every(Ct c, F1<T, Boolean> f) {
+        if (c == null)
+            return false;
+
+        for (T t : c)
+            if (!f.apply(t))
+                return false;
+
+        return true;
+    }
 
 
 }

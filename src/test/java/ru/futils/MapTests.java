@@ -17,7 +17,7 @@ import static org.junit.Assert.assertArrayEquals;
 @RunWith(JUnit4.class)
 public class MapTests {
 
-    public void mapTest(Integer... args) {
+    public void test(Integer... args) {
         List<Integer> list = Arrays.asList(args);
         ArrayList<Integer> list2 = FuncUtils.map(list, ArrayList.class, new F1<Integer, Integer>() {
             @Override
@@ -30,17 +30,17 @@ public class MapTests {
     }
 
     @Test
-    public void mapTest1() {
-        mapTest(1, 4, 5, 3, 2);
+    public void test1() {
+        test(1, 4, 5, 3, 2);
     }
 
     @Test
-    public void mapTest2() {
-        mapTest();
+    public void test2() {
+        test();
     }
 
-    public void mapTest3() {
-        mapTest(1);
+    public void test3() {
+        test(1);
     }
 
 }
