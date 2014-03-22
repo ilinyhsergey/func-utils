@@ -1,6 +1,7 @@
 package ru.futils;
 
 import ru.futils.func.F1;
+import ru.futils.func.F2;
 
 import java.util.Collection;
 
@@ -133,5 +134,47 @@ public final class FuncUtils {
         return true;
     }
 
+    /**
+     * Convolution method. Combines elements of the array a from right to left.
+     *
+     * @param a   array to combine
+     * @param f   function of 2 arguments,
+     *            first argument of f takes the value calculated in the previous step,
+     *            second argument of f takes the next value of the array
+     * @param i   initial value to combine
+     * @param <T> type of array elements
+     * @return combined value represented by the formula:
+     * if i is expected value equals <code>f (f (f (f (i,a[0]), a[1]), a[2]), ...)</code>
+     * if i is null value equals  <code>f (f (f (a[0], a[1]), a[2]), ...)</code>
+     */
+    public static <T> T reduce(T[] a, F2<T, T, T> f, T i) {
+        if (a == null || a.length == 0)
+            return i;
 
+        T ret = a[0];
+
+        if (i != null)
+            ret = f.apply(i, ret);
+
+        int length = a.length;
+
+        for (int id = 1; id < length; ++id)
+            ret = f.apply(ret, a[id]);
+
+        return ret;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T, Ct extends Collection<T>> T reduce(Ct c, F2<T, T, T> f) {
+        return c == null ? null : reduce((T[]) c.toArray(), f);
+    }
+
+    public static <T> T reduce(T[] a, F2<T, T, T> f) {
+        return reduce(a, f, null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T, Ct extends Collection<T>> T reduce(Ct c, F2<T, T, T> f, T i) {
+        return c == null ? null : reduce((T[]) c.toArray(), f, i);
+    }
 }
